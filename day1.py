@@ -7,13 +7,11 @@ numbers = "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
 
 
 def find(string, patterns):
-    if string != None:
-        for i, _ in enumerate(string):
-            for pi, pattern in enumerate(patterns, 1):
-                if str(pattern) == string[i:len(pattern)+i]:
-                    return string.replace(string[i:len(pattern)+i], str(pi), 1)
-
-    return None
+    for i, _ in enumerate(string):
+        for pi, pattern in enumerate(patterns, 1):
+            if str(pattern) == string[i:len(pattern)+i]:
+                return string.replace(string[i:len(pattern)+i], str(pi), 1)
+    return string
 
 
 def partOne(inputs):
@@ -27,13 +25,10 @@ def partOne(inputs):
 def partTwo(inputs):
     new_inputs = []
     for input in inputs:
-        cur_string = input
-        while True:
-            string = find(cur_string, numbers)
-            if string == None:
-                new_inputs.append(cur_string)
-                break
-            cur_string = string
+        pre = find(input, numbers)
+        suf = find(pre[::-1], [num[::-1] for num in numbers])
+        new_inputs.append(suf[::-1])
+
     return partOne(new_inputs)
 
 
