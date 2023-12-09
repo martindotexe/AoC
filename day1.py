@@ -1,36 +1,24 @@
-with open("./input/day1.txt", "r") as file:
-    inputs = []
-    for line in file.readlines():
-        inputs.append(line.replace("\n", ""))
+with open("input/day1.txt", "r") as file:
+    lines = [line.strip() for line in file.readlines()]
 
-numbers = "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+nums1 = []
+nums2 = []
+accumilator1 = 0
+accumilator2 = 0
 
+for line in lines:
+    for p, l in enumerate(line):
+        if l.isdigit():
+            nums1.append(l)
+            nums2.append(l)
+        for i, let in enumerate(["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]):
+            if line[p:].startswith(let):
+                nums2.append(i)
 
-def find(string, patterns):
-    for i, _ in enumerate(string):
-        for pi, pattern in enumerate(patterns, 1):
-            if str(pattern) == string[i:len(pattern)+i]:
-                return string.replace(string[i:len(pattern)+i], str(pi), 1)
-    return string
+    accumilator1 += int(f"{nums1[0]}{nums1[-1]}")
+    accumilator2 += int(f"{nums2[0]}{nums2[-1]}")
+    nums1 = []
+    nums2 = []
 
-
-def partOne(inputs):
-    input_sum = 0
-    for input in inputs:
-        input_nums = [int(c) for c in input if c.isnumeric()]
-        input_sum += input_nums[0]*10 + input_nums[-1]
-    return input_sum
-
-
-def partTwo(inputs):
-    new_inputs = []
-    for input in inputs:
-        pre = find(input, numbers)
-        suf = find(pre[::-1], [num[::-1] for num in numbers])
-        new_inputs.append(suf[::-1])
-
-    return partOne(new_inputs)
-
-
-print(f"Part One: {partOne(inputs)}")
-print(f"Part Two: {partTwo(inputs)}")
+print(f"Part One: {accumilator1}")
+print(f"Part Two: {accumilator2}")
