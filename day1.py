@@ -3,8 +3,8 @@ with open("input/day1.txt", "r") as file:
 
 nums1 = []
 nums2 = []
-accumilator1 = 0
-accumilator2 = 0
+accumulator1 = 0
+accumulator2 = 0
 
 for line in lines:
     for p, l in enumerate(line):
@@ -15,10 +15,10 @@ for line in lines:
             if line[p:].startswith(let):
                 nums2.append(i)
 
-    accumilator1 += int(f"{nums1[0]}{nums1[-1]}")
-    accumilator2 += int(f"{nums2[0]}{nums2[-1]}")
+    accumulator1 += int(f"{nums1[0]}{nums1[-1]}")
+    accumulator2 += int(f"{nums2[0]}{nums2[-1]}")
     nums1 = []
     nums2 = []
 
-print(f"Part One: {accumilator1}")
-print(f"Part Two: {accumilator2}")
+print(f"Part One: {accumulator1}")
+print(f"Part Two: {accumulator2}")
