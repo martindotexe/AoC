@@ -1,4 +1,7 @@
-with open("input/day1.txt", "r") as file:
+import os
+path = os.path.dirname(__file__)
+
+with open(f"{path}/input/day1.txt", "r") as file:
     lines = [line.strip() for line in file.readlines()]
 
 nums1 = []

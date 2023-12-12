@@ -1,4 +1,7 @@
-with open("input/day4.txt", "r") as file:
+import os
+path = os.path.dirname(__file__)
+
+with open(f"{path}/input/day4.txt", "r") as file:
     data = [line.strip().split(":") for line in file.readlines()]
 
 tickets = []

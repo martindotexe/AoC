@@ -1,4 +1,7 @@
-with open("input/day2.txt", "r") as file:
+import os
+path = os.path.dirname(__file__)
+
+with open(f"{path}/input/day2.txt", "r") as file:
     raw_data = [line.strip() for line in file.readlines()]
 
 data = []

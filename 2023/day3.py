@@ -1,4 +1,7 @@
-with open("input/day3.txt", "r") as file:
+import os
+path = os.path.dirname(__file__)
+
+with open(f"{path}/input/day3.txt", "r") as file:
     m = [line.strip()+"." for line in file.readlines()]
 
 # m = [
