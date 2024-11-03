@@ -5,7 +5,7 @@ Each year's solutions are maintained in a separate branch.
 
 ## Solutions by Year
 
-- [2023](https://github.com/martindotexe/AoC/tree/2023): 2 ⭐ out of 50 possible stars
+- [2023](https://github.com/martindotexe/AoC/tree/2023): 2 ⭐ out of 50 possible stars ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/martindotexe/AoC/go.yml?branch=2023&style=flat&logo=adventofcode&logoSize=auto&label=2023&labelColor=%230E0E24)
 
 ## Project Structure
 
