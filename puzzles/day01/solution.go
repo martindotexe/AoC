@@ -49,28 +49,24 @@ func Part1(in iter.Seq[string]) int {
 func Part2(in iter.Seq[string]) int {
 	sums := 0
 	for line := range in {
-		l, r := make(chan int), make(chan int)
+		l, r := 0, len(line)-1
+		ls, rs := 0, 0
 
-		go func() int {
-			for p := 0; p < len(line); p++ {
-				if d, ok := isSpelledDigit(line[p:]); ok {
-					l <- d
-				}
+		for l <= r {
+			if d, ok := isSpelledDigit(line[l:]); !ok {
+				l++
+			} else {
+				ls = d
 			}
-			close(l)
-			return 0
-		}()
-		go func() int {
-			for p := len(line) - 1; p >= 0; p-- {
-				if d, ok := isSpelledDigit(line[p:]); ok {
-					r <- d
-				}
+			if d, ok := isSpelledDigit(line[r:]); !ok {
+				r--
+			} else {
+				rs = d
 			}
-			close(r)
-			return 0
-		}()
-		ls := <-l
-		rs := <-r
+			if ls != 0 && rs != 0 {
+				break
+			}
+		}
 		sums += ls*10 + rs
 	}
 	return sums
