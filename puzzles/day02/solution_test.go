@@ -4,6 +4,8 @@ import (
 	"slices"
 	"testing"
 
+	"martindotexe/aoc/internal/utils"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -29,4 +31,18 @@ func TestPart2(t *testing.T) {
 	})
 
 	assert.Equal(t, 2286, Part2(in))
+}
+
+func BenchmarkPart1(b *testing.B) {
+	in := utils.IterLines("in.txt")
+
+	b.ResetTimer()
+	Part1(in)
+}
+
+func BenchmarkPart2(b *testing.B) {
+	in := utils.IterLines("in.txt")
+
+	b.ResetTimer()
+	Part2(in)
 }
