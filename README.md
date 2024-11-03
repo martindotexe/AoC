@@ -10,7 +10,8 @@ Total Stars: 2/50 ⭐
 
 | Day | Part 1 | Part 2 | Title | Solution |
 |-----|---------|---------|-------|----------|
-| [01](https://adventofcode.com/2023/day/1) | ⭐️ | ⭐️ | Trebuchet?! | [Solution](puzzles/day1/solution.go) |
+| [01](https://adventofcode.com/2023/day/1) | ⭐️ | ⭐️ | Trebuchet?! | [Solution](puzzles/day01/solution.go) |
+| [02](https://adventofcode.com/2023/day/2) | ⭐️ | ⭐️ | Cube Conundrum | [Solution](puzzles/day02/solution.go) |
 
 ## Directory Structure
 ```
