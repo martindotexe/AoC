@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"martindotexe/aoc/puzzles/day1"
+	"martindotexe/aoc/puzzles/day01"
 )
 
 var mappings = map[int]func() (int, int){
-	1: day1.Run,
+	1: day01.Run,
 }
 
 func Run(day int) {

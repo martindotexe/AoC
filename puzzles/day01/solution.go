@@ -1,4 +1,4 @@
-package day1
+package day01
 
 import (
 	"iter"
@@ -20,8 +20,8 @@ var digitMap = map[string]int{
 }
 
 func Run() (int, int) {
-	in1 := utils.IterLines("puzzles/day1/in.txt")
-	in2 := utils.IterLines("puzzles/day1/in.txt")
+	in1 := utils.IterLines("puzzles/day01/in.txt")
+	in2 := utils.IterLines("puzzles/day01/in.txt")
 
 	return Part1(in1), Part2(in2)
 }
