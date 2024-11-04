@@ -4,7 +4,7 @@ My solutions for [Advent of Code 2023](https://adventofcode.com/2023) implemente
 
 ## Progress
 
-Total Stars: 2/50 ⭐
+Total Stars: 6/50 ⭐
 
 ## Solutions
 
