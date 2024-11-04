@@ -22,12 +22,12 @@ func openFile(path string) *os.File {
 
 func IterLines(path string) iter.Seq[string] {
 	file := openFile(path)
-	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	return func(yield func(string) bool) {
 		for scanner.Scan() {
 			if !yield(scanner.Text()) {
+				file.Close()
 				return
 			}
 		}
