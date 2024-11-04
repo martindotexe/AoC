@@ -12,7 +12,7 @@ Each year's solutions are maintained in a separate branch.
 
 The different years are separated into their own branches. 
 ```
-puzzles /
+puzzles/
 ├── day01/
 │   ├── solution.go       # Solution code
 │   ├── solution_test.go  # Tests
