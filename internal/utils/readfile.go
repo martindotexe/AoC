@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func IterLines(path string) iter.Seq[string] {
+func openFile(path string) *os.File {
 	pwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -17,6 +17,13 @@ func IterLines(path string) iter.Seq[string] {
 	if err != nil {
 		panic(err)
 	}
+	return file
+}
+
+func IterLines(path string) iter.Seq[string] {
+	file := openFile(path)
+	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 	return func(yield func(string) bool) {
 		for scanner.Scan() {
@@ -25,4 +32,18 @@ func IterLines(path string) iter.Seq[string] {
 			}
 		}
 	}
+}
+
+func ReadFile(path string) []string {
+	file := openFile(path)
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+
+	lines := []string{}
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	return lines
 }
