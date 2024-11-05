@@ -19,7 +19,7 @@ type Part struct {
 	point Point
 }
 
-var matrix = [][]int{
+var matrix = [8][2]int{
 	{-1, -1},
 	{0, -1},
 	{1, -1},
@@ -32,8 +32,21 @@ var matrix = [][]int{
 
 func Part1(in []string) int {
 	partSet := map[Point]bool{}
-	parts := map[Point][]int{}
+	parts := make(map[Point][]int, 8) // Preallocate for 8 possible numbers.
 	currentNumber := 0
+
+	processNumber := func() {
+		if currentNumber != 0 {
+			for part := range partSet {
+				parts[part] = append(parts[part], currentNumber)
+			}
+		}
+		for part := range partSet {
+			delete(partSet, part)
+		}
+		currentNumber = 0
+	}
+
 	for x, line := range in {
 		for y, c := range line {
 			if isDigit(c) {
@@ -49,15 +62,10 @@ func Part1(in []string) int {
 					}
 				}
 			} else {
-				if currentNumber != 0 {
-					for part := range partSet {
-						parts[part] = append(parts[part], currentNumber)
-					}
-					partSet = map[Point]bool{}
-				}
-				currentNumber = 0
+				processNumber()
 			}
 		}
+		processNumber()
 	}
 
 	sum := 0
@@ -71,8 +79,21 @@ func Part1(in []string) int {
 
 func Part2(in []string) int {
 	partSet := map[Part]bool{}
-	parts := map[Part][]int{}
+	parts := make(map[Part][]int, 8) // Preallocate for 8 possible numbers.
 	currentNumber := 0
+
+	processNumber := func() {
+		if currentNumber != 0 {
+			for part := range partSet {
+				parts[part] = append(parts[part], currentNumber)
+			}
+		}
+		for part := range partSet {
+			delete(partSet, part)
+		}
+		currentNumber = 0
+	}
+
 	for x, line := range in {
 		for y, c := range line {
 			if isDigit(c) {
@@ -88,15 +109,10 @@ func Part2(in []string) int {
 					}
 				}
 			} else {
-				if currentNumber != 0 {
-					for part := range partSet {
-						parts[part] = append(parts[part], currentNumber)
-					}
-					partSet = map[Part]bool{}
-				}
-				currentNumber = 0
+				processNumber()
 			}
 		}
+		processNumber()
 	}
 
 	sum := 0
