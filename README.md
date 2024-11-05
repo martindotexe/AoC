@@ -4,7 +4,7 @@ My solutions for [Advent of Code 2023](https://adventofcode.com/2023) implemente
 
 ## Progress
 
-Total Stars: 6/50 ⭐
+Total Stars: 7/50 ⭐
 
 ## Solutions
 
@@ -13,6 +13,7 @@ Total Stars: 6/50 ⭐
 | [01](https://adventofcode.com/2023/day/1) | ⭐️ | ⭐️ | Trebuchet?! | [Solution](puzzles/day01/solution.go) |
 | [02](https://adventofcode.com/2023/day/2) | ⭐️ | ⭐️ | Cube Conundrum | [Solution](puzzles/day02/solution.go) |
 | [03](https://adventofcode.com/2023/day/3) | ⭐️ | ⭐️ | Gear Ratios | [Solution](puzzles/day03/solution.go) |
+| [04](https://adventofcode.com/2023/day/4) | ⭐️ |  | Scratchcards | [Solution](puzzles/day04/solution.go) |
 
 ## Directory Structure
 ```
