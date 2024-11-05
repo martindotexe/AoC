@@ -38,12 +38,16 @@ func BenchmarkPart1(b *testing.B) {
 	in := utils.IterLines("in.txt")
 
 	b.ResetTimer()
-	Part1(in)
+	for i := 0; i < b.N; i++ {
+		Part1(in)
+	}
 }
 
 func BenchmarkPart2(b *testing.B) {
 	in := utils.IterLines("in.txt")
 
 	b.ResetTimer()
-	Part2(in)
+	for i := 0; i < b.N; i++ {
+		Part2(in)
+	}
 }
