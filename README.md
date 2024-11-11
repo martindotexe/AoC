@@ -9,7 +9,7 @@ Total Stars: 7/50 ⭐
 ## Solutions
 
 | Day | Part 1 | Part 2 | Title | Solution |
-|-----|---------|---------|-------|----------|
+|:---:|:------:|:------:|-------|:--------:|
 | [01](https://adventofcode.com/2023/day/1) | ⭐️ | ⭐️ | Trebuchet?! | [Solution](puzzles/day01/solution.go) |
 | [02](https://adventofcode.com/2023/day/2) | ⭐️ | ⭐️ | Cube Conundrum | [Solution](puzzles/day02/solution.go) |
 | [03](https://adventofcode.com/2023/day/3) | ⭐️ | ⭐️ | Gear Ratios | [Solution](puzzles/day03/solution.go) |
