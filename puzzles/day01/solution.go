@@ -2,7 +2,6 @@ package day01
 
 import (
 	"iter"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -35,26 +34,26 @@ func newNode(value int) *Node {
 	return &Node{value: value}
 }
 
-func (n *Node) iter() iter.Seq[*Node] {
-	return func(yield func(*Node) bool) {
+func (n *Node) slice() []int {
+	s := []int{}
+	var f func(*Node)
+	f = func(n *Node) {
 		if n.left != nil {
-			n.left.iter()(yield)
+			f(n.left)
 		}
-		if !yield(n) {
-			return
-		}
+		s = append(s, n.value)
 		if n.right != nil {
-			n.right.iter()(yield)
+			f(n.right)
 		}
 	}
+	f(n)
+	return s
 }
 
-func zip(left, right iter.Seq[*Node]) iter.Seq2[*Node, *Node] {
-	leftS := slices.Collect(left)
-	rightS := slices.Collect(right)
-	return func(yield func(*Node, *Node) bool) {
-		for i := 0; i < len(leftS); i++ {
-			if !yield(leftS[i], rightS[i]) {
+func zip(left, right []int) iter.Seq2[int, int] {
+	return func(yield func(int, int) bool) {
+		for i := 0; i < len(left); i++ {
+			if !yield(left[i], right[i]) {
 				return
 			}
 		}
@@ -85,34 +84,30 @@ func part1(input iter.Seq[string]) int {
 		}
 	}
 	sum := 0
-	for l, r := range zip(left.iter(), right.iter()) {
-		distance := max(l.value, r.value) - min(l.value, r.value)
+	for l, r := range zip(left.slice(), right.slice()) {
+		distance := max(l, r) - min(l, r)
 		sum += distance
 	}
 	return sum
 }
 
 func part2(input iter.Seq[string]) int {
-	left := &Node{}
+	left := []int{}
 	right := map[int]int{}
-	for i, line := range utils.Enumerate(input) {
+	for line := range input {
 		data := strings.Split(line, "   ")
 		l, lerr := strconv.Atoi(data[0])
 		r, rerr := strconv.Atoi(data[1])
 		if lerr != nil || rerr != nil {
 			panic("Failed to convert string to int")
 		}
-		if i == 0 {
-			left = newNode(l)
-		} else {
-			left.push(l)
-		}
+		left = append(left, l)
 		right[r] += 1
 	}
 	sum := 0
-	for l := range left.iter() {
-		simScore := right[l.value]
-		sum += l.value * simScore
+	for _, l := range left {
+		simScore := right[l]
+		sum += l * simScore
 	}
 	return sum
 }
