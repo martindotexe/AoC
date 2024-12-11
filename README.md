@@ -7,7 +7,7 @@ Each year's solutions are maintained in a separate branch.
 
 ## Solutions by Year
 
-- [2024](https://github.com/martindotexe/AoC/tree/2024): 4 ⭐ out of 50 possible stars.
+- [2024](https://github.com/martindotexe/AoC/tree/2024): 6 ⭐ out of 50 possible stars.
 - [2023](https://github.com/martindotexe/AoC/tree/2023): 7 ⭐ out of 50 possible stars.
 
 ## Project Structure
