@@ -5,10 +5,12 @@ import (
 	"os"
 
 	"martindotexe/AoC/2024/puzzles/day01"
+	"martindotexe/AoC/2024/puzzles/day02"
 )
 
 var mappings = map[int]func() (int, int){
 	1: day01.Run,
+	2: day02.Run,
 }
 
 func Run(day int) {

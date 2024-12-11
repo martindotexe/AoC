@@ -4,17 +4,19 @@ My solutions for [Advent of Code 2024](https://adventofcode.com/2024) implemente
 
 ## Progress
 
-Total Stars: 2/50 ⭐
+Total Stars: 4/50 ⭐
 
 ## Solutions
 
 | Day                                       | Part 1 | Part 2 | Title              | Solution                              |
 |-------------------------------------------|--------|--------|--------------------|---------------------------------------|
 | [01](https://adventofcode.com/2024/day/1) | ⭐️     | ⭐️     | Historian Hysteria | [Solution](puzzles/day01/solution.go) |
+| [02](https://adventofcode.com/2024/day/2) | ⭐️     | ⭐️     | Red-Nosed Reports  | [Solution](puzzles/day02/solution.go) |
 
 ## Directory Structure
+
 ```
-puzzles /
+puzzles/
 ├── day01/
 │   ├── solution.go       # Solution code
 │   ├── solution_test.go  # Tests
@@ -24,11 +26,13 @@ puzzles /
 ## Running Solutions
 
 To run a specific day's solution:
+
 ```bash
 go run main.go -d XX
 ```
 
 To run tests:
+
 ```bash
 go test ./...
 ```
