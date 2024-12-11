@@ -16,7 +16,7 @@ func TestPart1(t *testing.T) {
 		"1 3 6 7 9",
 	}
 
-	assert.Equal(t, 2, Part1(input))
+	assert.Equal(t, 2, part1(input))
 }
 
 func TestPart2(t *testing.T) {
@@ -29,5 +29,5 @@ func TestPart2(t *testing.T) {
 		"1 3 6 7 9",
 	}
 
-	assert.Equal(t, 4, Part2(input))
+	assert.Equal(t, 4, part2(input))
 }

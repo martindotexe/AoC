@@ -9,7 +9,7 @@ import (
 
 func Run() (int, int) {
 	input := utils.ReadFile("puzzles/day02/in.txt")
-	return Part1(input), Part2(input)
+	return part1(input), part2(input)
 }
 
 func abs(i int) int {
@@ -48,7 +48,7 @@ func valid(nums []int) bool {
 	return isAscending || isDescending
 }
 
-func Part1(input []string) int {
+func part1(input []string) int {
 	sum := 0
 	for _, line := range input {
 		nums := utils.ToInts(strings.Split(line, " "))
@@ -59,7 +59,7 @@ func Part1(input []string) int {
 	return sum
 }
 
-func Part2(input []string) int {
+func part2(input []string) int {
 	sum := 0
 	for _, line := range input {
 		nums := utils.ToInts(strings.Split(line, " "))
