@@ -4,7 +4,7 @@ My solutions for [Advent of Code 2024](https://adventofcode.com/2024) implemente
 
 ## Progress
 
-Total Stars: 6/50 ⭐
+Total Stars: 8/50 ⭐
 
 ## Solutions
 
@@ -13,6 +13,7 @@ Total Stars: 6/50 ⭐
 | [01](https://adventofcode.com/2024/day/1) | ⭐️     | ⭐️     | Historian Hysteria | [Solution](puzzles/day01/solution.go) |
 | [02](https://adventofcode.com/2024/day/2) | ⭐️     | ⭐️     | Red-Nosed Reports  | [Solution](puzzles/day02/solution.go) |
 | [03](https://adventofcode.com/2024/day/3) | ⭐️     | ⭐️     | Mull It Over       | [Solution](puzzles/day03/solution.go) |
+| [04](https://adventofcode.com/2024/day/4) | ⭐️     | ⭐️     | Ceres Search       | [Solution](puzzles/day04/solution.go) |
 
 ## Directory Structure
 
