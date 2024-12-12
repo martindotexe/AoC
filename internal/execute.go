@@ -8,6 +8,7 @@ import (
 	"martindotexe/AoC/2024/puzzles/day02"
 	"martindotexe/AoC/2024/puzzles/day03"
 	"martindotexe/AoC/2024/puzzles/day04"
+	"martindotexe/AoC/2024/puzzles/day05"
 )
 
 var mappings = map[int]func() (int, int){
@@ -15,6 +16,7 @@ var mappings = map[int]func() (int, int){
 	2: day02.Run,
 	3: day03.Run,
 	4: day04.Run,
+	5: day05.Run,
 }
 
 func Run(day int) {
