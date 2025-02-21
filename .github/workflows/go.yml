@@ -3,9 +3,7 @@ name: Tests
 
 on:
   push:
-    branches: [ "20**" ]
-  pull_request:
-    branches: [ "20**" ]
+    branches: [ "main" ]
 
 jobs:
   test:
@@ -24,40 +22,34 @@ jobs:
       run: go mod download
 
     - name: Fetch Puzzle Inputs
-      if: github.event_name != 'pull_request'
       run: |
-        # Function to fetch input for a specific day
         fetch_input() {
           local year=$1
           local day=$2
           local day_padded=$(printf "%02d" $day)
-          local dir="puzzles/day${day_padded}"
-          
-          # Skip if directory doesn't exist
-          if [ ! -d "$dir" ]; then
-            return 0
-          fi
-          
-          # Fetch input only if solution exists
+          local dir="${year}/day${day_padded}"
+
+          if [ ! -d "$dir" ]; then return; fi
           if [ -f "${dir}/solution.go" ]; then
-            echo "Fetching input for ${year} day ${day}"
+            echo "ℹ️ Found solution for ${year} day ${day}"
             curl "https://adventofcode.com/${year}/day/${day}/input" \
               -H "Cookie: session=${AOC_SESSION}" \
-              -o "${dir}/in.txt"
-            # Add small delay to be nice to AoC servers
+              -o "${dir}/in.txt" --silent --show-error
             sleep 1
           fi
         }
-        
-        # Get current year from branch name or default to 2023
-        YEAR=${GITHUB_REF#refs/heads/}
-        if [[ ! $YEAR =~ ^20[0-9]{2}$ ]]; then
-          YEAR=2023
-        fi
-        
-        # Fetch inputs for all days that have solutions
-        for day in {1..25}; do
-          fetch_input $YEAR $day
+
+        # Look for year directories using simple pattern match
+        for dir in *; do
+          if [ -d "$dir" ] && [[ "$dir" =~ ^20[0-9][0-9]$ ]]; then  # Match 2000-2099
+            year="$dir"
+            echo "✅ Detected valid year directory: $year"
+            for day in {1..25}; do
+              fetch_input "$year" "$day"
+            done
+          else
+            echo "⚠️ Skipping non-year directory/file: $dir"
+          fi
         done
       env:
         AOC_SESSION: ${{ secrets.AOC_SESSION }}
