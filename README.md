@@ -1,5 +1,5 @@
 # Advent of Code Solutions in Go
-<!--TODO: Add shields for stars, etc.-->
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/martindotexe/aoc/go.yml?style=flat&logo=adventofcode&logoSize=auto&label=Tests&labelColor=%230f0f23)
 
 This repository contains my solutions to [Advent of Code](https://adventofcode.com/) challenges implemented in Go.
 Each year's solutions are maintained in a separate branch.
