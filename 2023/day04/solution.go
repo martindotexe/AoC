@@ -8,7 +8,7 @@ import (
 )
 
 func Run() (int, int) {
-	in := utils.IterLines("2024/day04/in.txt")
+	in := utils.IterLines("2023/day04/in.txt")
 
 	return Part1(in), Part2()
 }

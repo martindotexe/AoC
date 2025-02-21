@@ -20,8 +20,8 @@ var digitMap = map[string]int{
 }
 
 func Run() (int, int) {
-	in1 := utils.IterLines("2024/day01/in.txt")
-	in2 := utils.IterLines("2024/day01/in.txt")
+	in1 := utils.IterLines("2023/day01/in.txt")
+	in2 := utils.IterLines("2023/day01/in.txt")
 
 	return Part1(in1), Part2(in2)
 }
