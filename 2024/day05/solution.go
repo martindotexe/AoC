@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"strings"
 
-	"martindotexe/AoC/2024/internal/utils"
+	"martindotexe/AoC/internal/utils"
 )
 
 func Run() (int, int) {
-	input := utils.ReadFile("puzzles/day05/in.txt")
+	input := utils.ReadFile("2024/day05/in.txt")
 	return part1(input), part2(input)
 }
 

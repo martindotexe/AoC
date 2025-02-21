@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"martindotexe/AoC/2024/internal/utils"
+	"martindotexe/AoC/internal/utils"
 )
 
 type Node struct {
@@ -61,8 +61,8 @@ func zip(left, right []int) iter.Seq2[int, int] {
 }
 
 func Run() (int, int) {
-	input1 := utils.IterLines("puzzles/day01/in.txt")
-	input2 := utils.IterLines("puzzles/day01/in.txt")
+	input1 := utils.IterLines("2024/day01/in.txt")
+	input2 := utils.IterLines("2024/day01/in.txt")
 	return part1(input1), part2(input2)
 }
 

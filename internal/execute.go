@@ -4,25 +4,29 @@ import (
 	"fmt"
 	"os"
 
-	"martindotexe/aoc/puzzles/day01"
-	"martindotexe/aoc/puzzles/day02"
-	"martindotexe/aoc/puzzles/day03"
-	"martindotexe/aoc/puzzles/day04"
+	"martindotexe/AoC/2024/day01"
+	"martindotexe/AoC/2024/day02"
+	"martindotexe/AoC/2024/day03"
+	"martindotexe/AoC/2024/day04"
+	"martindotexe/AoC/2024/day05"
 )
 
-var mappings = map[int]func() (int, int){
-	1: day01.Run,
-	2: day02.Run,
-	3: day03.Run,
-	4: day04.Run,
+var mappings = map[int]map[int]func() (int, int){
+	2024: {
+		1: day01.Run,
+		2: day02.Run,
+		3: day03.Run,
+		4: day04.Run,
+		5: day05.Run,
+	},
 }
 
-func Run(day int) {
+func Run(year, day int) {
 	var output string
-	if day == 0 {
+	if day == 0 || year == 0 {
 		output = runAll()
 	} else {
-		output = runDay(day)
+		output = runDay(year, day)
 	}
 	if output == "" {
 		os.Exit(1)
@@ -31,24 +35,26 @@ func Run(day int) {
 	fmt.Println(output)
 }
 
-func runDay(day int) string {
-	fn, ok := mappings[day]
+func runDay(year, day int) string {
+	fn, ok := mappings[year][day]
 	if !ok {
 		return ""
 	}
 	part1, part2 := fn()
-	return format(day, part1, part2)
+	return format(year, day, part1, part2)
 }
 
 func runAll() string {
 	output := ""
-	for day, mapping := range mappings {
-		part1, part2 := mapping()
-		output += format(day, part1, part2)
+	for year, yearMapping := range mappings {
+		for day, fn := range yearMapping {
+			part1, part2 := fn()
+			output += format(year, day, part1, part2)
+		}
 	}
 	return output
 }
 
-func format(day, part1, part2 int) string {
-	return fmt.Sprintf("Day %d:\n\tPart 1: %d\n\tPart 2: %d\n", day, part1, part2)
+func format(year, day, part1, part2 int) string {
+	return fmt.Sprintf("Year %d\n\tDay %d:\n\t\tPart 1: %d\n\t\tPart 2: %d\n", year, day, part1, part2)
 }

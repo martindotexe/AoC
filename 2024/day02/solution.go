@@ -4,11 +4,11 @@ import (
 	"slices"
 	"strings"
 
-	"martindotexe/AoC/2024/internal/utils"
+	"martindotexe/AoC/internal/utils"
 )
 
 func Run() (int, int) {
-	input := utils.ReadFile("puzzles/day02/in.txt")
+	input := utils.ReadFile("2024/day02/in.txt")
 	return part1(input), part2(input)
 }
 

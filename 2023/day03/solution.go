@@ -1,11 +1,9 @@
 package day03
 
-import (
-	"martindotexe/aoc/internal/utils"
-)
+import "martindotexe/AoC/internal/utils"
 
 func Run() (int, int) {
-	in := utils.ReadFile("puzzles/day03/in.txt")
+	in := utils.ReadFile("2024/day03/in.txt")
 
 	return Part1(in), Part2(in)
 }

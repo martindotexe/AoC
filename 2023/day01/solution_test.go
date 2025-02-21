@@ -4,7 +4,7 @@ import (
 	"slices"
 	"testing"
 
-	"martindotexe/aoc/internal/utils"
+	"martindotexe/AoC/internal/utils"
 
 	"github.com/stretchr/testify/assert"
 )

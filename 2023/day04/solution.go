@@ -4,11 +4,11 @@ import (
 	"iter"
 	"strings"
 
-	"martindotexe/aoc/internal/utils"
+	"martindotexe/AoC/internal/utils"
 )
 
 func Run() (int, int) {
-	in := utils.IterLines("puzzles/day04/in.txt")
+	in := utils.IterLines("2024/day04/in.txt")
 
 	return Part1(in), Part2()
 }
