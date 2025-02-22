@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"martindotexe/AoC/internal"
+	"martindotexe/AoC/go/internal"
 )
 
 func main() {

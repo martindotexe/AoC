@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"martindotexe/AoC/internal/utils"
+	"martindotexe/AoC/go/internal/utils"
 )
 
 type Node struct {

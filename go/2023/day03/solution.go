@@ -1,6 +1,6 @@
 package day03
 
-import "martindotexe/AoC/internal/utils"
+import "martindotexe/AoC/go/internal/utils"
 
 func Run() (int, int) {
 	in := utils.ReadFile("2023/day03/in.txt")

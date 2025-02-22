@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"martindotexe/AoC/internal/utils"
+	"martindotexe/AoC/go/internal/utils"
 )
 
 var maxColors = map[string]int{

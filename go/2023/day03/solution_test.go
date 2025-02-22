@@ -3,7 +3,7 @@ package day03
 import (
 	"testing"
 
-	"martindotexe/AoC/internal/utils"
+	"martindotexe/AoC/go/internal/utils"
 
 	"github.com/stretchr/testify/assert"
 )

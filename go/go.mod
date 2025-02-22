@@ -1,4 +1,4 @@
-module martindotexe/AoC
+module martindotexe/AoC/go
 
 go 1.23.2
 

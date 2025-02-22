@@ -4,7 +4,7 @@ import (
 	"iter"
 	"strings"
 
-	"martindotexe/AoC/internal/utils"
+	"martindotexe/AoC/go/internal/utils"
 )
 
 func Run() (int, int) {

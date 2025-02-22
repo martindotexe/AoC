@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"martindotexe/AoC/2024/day01"
-	"martindotexe/AoC/2024/day02"
-	"martindotexe/AoC/2024/day03"
-	"martindotexe/AoC/2024/day04"
-	"martindotexe/AoC/2024/day05"
+	"martindotexe/AoC/go/2024/day01"
+	"martindotexe/AoC/go/2024/day02"
+	"martindotexe/AoC/go/2024/day03"
+	"martindotexe/AoC/go/2024/day04"
+	"martindotexe/AoC/go/2024/day05"
 )
 
 var mappings = map[int]map[int]func() (int, int){
