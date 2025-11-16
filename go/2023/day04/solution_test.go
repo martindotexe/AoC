@@ -23,7 +23,7 @@ func TestPart1(t *testing.T) {
 }
 
 func BenchmarkPart1(b *testing.B) {
-	in := utils.IterLines("in.txt")
+	in := utils.IterLines("../../../data/2023/day04.txt")
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
