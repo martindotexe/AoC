@@ -5,9 +5,10 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## Solutions by Year
 
-- [2024](https://github.com/martindotexe/AoC/2024): 10 ⭐ out of 50 possible stars.
-- [2023](https://github.com/martindotexe/AoC/2023): 7 ⭐ out of 50 possible stars.
-
+- 2024: 11/50 ⭐
+- 2023: 7/50 ⭐
+- 2022: 1/50 ⭐
+- 2021: 5/50 ⭐
 ## Project Structure
 
 The different years are separated into their own branches. 
