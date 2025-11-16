@@ -1,35 +1,30 @@
 # Advent of Code Solutions
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/martindotexe/aoc/go.yml?style=flat&logo=adventofcode&logoSize=auto&label=Tests&labelColor=%230f0f23)
 
-This repository contains my solutions to [Advent of Code](https://adventofcode.com/) challenges.
+This repository contains solutions to [Advent of Code](https://adventofcode.com/) challenges across different programming languages.
 
-## Solutions by Year
+## My Progress
+
+Overall Advent of Code progress (solutions may be in this repository or elsewhere):
 
 - 2024: 11/50 ⭐
 - 2023: 7/50 ⭐
 - 2022: 1/50 ⭐
 - 2021: 5/50 ⭐
-## Project Structure
 
-The different years are separated into their own branches. 
+## Repository Structure
+
+Solutions are organized by language and year:
+
 ```
-2024/
-├── day01/
-│   ├── solution.go       # Solution code
-│   ├── solution_test.go  # Tests
-└── ...
-```
-
-## Running Solutions
-
-To run a specific day's solution:
-
-```bash
-go run main.go -y XXXX -d XX
+go/
+├── 2024/
+│   ├── day01/
+│   ├── day02/
+│   └── ...
+├── 2023/
+│   └── ...
+└── main.go
 ```
 
-To run tests:
-
-```bash
-go test ./...
-```
+See individual language directories for specific instructions on running solutions and tests.

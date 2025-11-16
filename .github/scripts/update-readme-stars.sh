@@ -62,27 +62,29 @@ echo "Found stars for the following years:"
 echo "$YEARS_DATA"
 
 # Update README.md
-# Strategy: Replace everything between "## Solutions by Year" and the next "##" section
+# Strategy: Replace everything between "## My Progress" and the next "##" section
 echo "Updating $README..."
 
 # Create temporary file with updated content
 awk -v years="$YEARS_DATA" '
-  # Print everything before "## Solutions by Year"
-  /^## Solutions by Year/ {
-    in_solutions = 1
+  # Print everything before "## My Progress"
+  /^## My Progress/ {
+    in_progress = 1
     print
+    print ""
+    print "Overall Advent of Code progress (solutions may be in this repository or elsewhere):"
     print ""
     print years
     next
   }
 
   # When we hit the next section, stop skipping
-  /^## / && in_solutions {
-    in_solutions = 0
+  /^## / && in_progress {
+    in_progress = 0
   }
 
-  # Skip lines while in the solutions section
-  in_solutions {
+  # Skip lines while in the progress section
+  in_progress {
     next
   }
 
