@@ -43,7 +43,7 @@ func TestPart2(t *testing.T) {
 }
 
 func BenchmarkPart1(b *testing.B) {
-	in := utils.ReadFile("in.txt")
+	in := utils.ReadFile("../../../data/2023/day03.txt")
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -52,7 +52,7 @@ func BenchmarkPart1(b *testing.B) {
 }
 
 func BenchmarkPart2(b *testing.B) {
-	in := utils.ReadFile("in.txt")
+	in := utils.ReadFile("../../../data/2023/day03.txt")
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
