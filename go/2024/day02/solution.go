@@ -8,7 +8,7 @@ import (
 )
 
 func Run() (int, int) {
-	input := utils.ReadFile("2024/day02/in.txt")
+	input := utils.ReadFile("../data/2024/day02.txt")
 	return part1(input), part2(input)
 }
 

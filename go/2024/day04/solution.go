@@ -6,7 +6,7 @@ import (
 )
 
 func Run() (int, int) {
-	data, err := os.ReadFile("2024/day04/in.txt")
+	data, err := os.ReadFile("../data/2024/day04.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -61,8 +61,8 @@ func zip(left, right []int) iter.Seq2[int, int] {
 }
 
 func Run() (int, int) {
-	input1 := utils.IterLines("2024/day01/in.txt")
-	input2 := utils.IterLines("2024/day01/in.txt")
+	input1 := utils.IterLines("../data/2024/day01.txt")
+	input2 := utils.IterLines("../data/2024/day01.txt")
 	return part1(input1), part2(input2)
 }
 
