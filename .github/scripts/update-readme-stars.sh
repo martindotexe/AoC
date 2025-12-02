@@ -43,13 +43,16 @@ YEARS_DATA=$(echo "$HTML" | grep 'class="eventlist-event"' | while read -r line;
   if echo "$line" | grep -q 'star-count'; then
     # Remove leading spaces and extract number
     stars=$(echo "$line" | sed -n 's/.*<span class="star-count">[[:space:]]*\([0-9]\+\)\*.*/\1/p')
+    # Extract total stars from the "/ XX*" pattern
+    total=$(echo "$line" | sed -n 's/.*<span class="quiet">[[:space:]]*\/[[:space:]]*\([0-9]\+\)\*.*/\1/p')
   else
     stars=0
+    total=50
   fi
 
   # Only include years with stars > 0
   if [ "$stars" -gt 0 ] && [ -n "$year" ]; then
-    echo "- $year: $stars/50 ⭐"
+    echo "- $year: $stars/$total ⭐"
   fi
 done | sort -r)
 
