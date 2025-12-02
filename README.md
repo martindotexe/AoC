@@ -12,7 +12,6 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 - 2023: 7/50 ⭐
 - 2022: 1/50 ⭐
 - 2021: 5/50 ⭐
-
 ## Repository Structure
 
 Solutions are organized by language and year:
