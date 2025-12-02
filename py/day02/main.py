@@ -6,8 +6,13 @@ def invalidId(id: int):
 
 
 def validPattern(pattern: str, string: str):
-    for i in range(0, len(string), len(pattern)):
-        if string[i : i + len(pattern)] != pattern:
+    string_len = len(string)
+    patter_len = len(pattern)
+    if string_len == 2:
+        return string[0] == string[1]
+
+    for i in range(patter_len, string_len, patter_len):
+        if string[i : i + patter_len] != pattern:
             return False
     return True
 
@@ -19,7 +24,7 @@ def advancedInvalidId(id: int):
     l, r = 1, len(str_id) - 1
 
     while l <= r:
-        if str_id[:l] == str_id[r:]:
+        if len(str_id) % l == 0 and str_id[:l] == str_id[r:]:
             possible_patterns.append(str_id[:l])
 
         l += 1
