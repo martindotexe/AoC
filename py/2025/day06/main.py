@@ -15,8 +15,6 @@ def partOne():
                     count = count * curr if count != 0 else curr
                 elif operator == "+":
                     count += numbers[row][col]
-                elif operator == "-":
-                    count -= numbers[row][col]
             aggr += count
 
         print(aggr)
@@ -33,8 +31,6 @@ def partTwo():
                 count = count * curr if count != 0 else curr
             elif operator == "+":
                 count += curr
-            elif operator == "-":
-                count -= curr
 
         return count
 
