@@ -7,7 +7,7 @@ This repository contains solutions to [Advent of Code](https://adventofcode.com/
 
 Overall Advent of Code progress (solutions may be in this repository or elsewhere):
 
-- 2025: 9/24 ⭐
+- 2025: 10/24 ⭐
 - 2024: 11/50 ⭐
 - 2023: 7/50 ⭐
 - 2022: 1/50 ⭐
