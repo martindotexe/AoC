@@ -1,3 +1,6 @@
+from functools import cache
+
+
 def partOne():
     with open("in.txt", "r") as file:
         grid = [line.strip() for line in file.readlines()]
@@ -17,10 +20,27 @@ def partOne():
 
             curr = set(next)
             next = []
-            print("".join(["|" if c in curr else row[c] for c in range(len(row))]))
+            # Visualisation
+            # print("".join(["|" if c in curr else row[c] for c in range(len(row))]))
 
         print(splits)
 
 
+def partTwo():
+    with open("in.txt", "r") as file:
+        grid = [line.strip() for line in file.readlines()]
+
+        @cache
+        def solve(row: int, col: int) -> int:
+            if row >= len(grid):
+                return 1
+            if grid[row][col] == "^":
+                return solve(row + 1, col - 1) + solve(row + 1, col + 1)
+            return solve(row + 1, col)
+
+        print(solve(0, grid[0].index("S")))
+
+
 if __name__ == "__main__":
     partOne()
+    partTwo()
