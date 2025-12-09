@@ -154,8 +154,36 @@ jobs:
       - name: Merge all benchmark results
         uses: actions/upload-artifact/merge@v4
         with:
-          name: benchmarks-combined
+          name: benchmarks
           pattern: benchmark-*
           separate-directories: false
           delete-merged: true
           retention-days: 30
+
+  update-readme:
+    needs: merge-benchmarks
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download benchmark results
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmarks
+          path: benchmarks/
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Update README with benchmarks
+        run: python update_readme.py benchmarks/
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update README with latest benchmark results" && git push)
