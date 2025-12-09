@@ -1,19 +1,36 @@
-package day04
+package main
 
 import (
+	"fmt"
 	"iter"
+	"os"
+	"slices"
 	"strings"
-
-	"martindotexe/AoC/internal/utils"
 )
 
-func Run() (int, int) {
-	in := utils.IterLines("../data/2023/day04.txt")
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
 
-	return Part1(in), Part2()
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	in := slices.Values(lines)
+
+	result1 := part1(in)
+	result2 := part2()
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
-func Part1(in iter.Seq[string]) int {
+func part1(in iter.Seq[string]) int {
 	sum := 0
 	winningMap := make(map[int]bool)
 	for line := range in {
@@ -38,7 +55,7 @@ func Part1(in iter.Seq[string]) int {
 	return sum
 }
 
-func Part2() int {
+func part2() int {
 	return 0
 }
 

@@ -1,15 +1,31 @@
-package day02
+package main
 
 import (
+	"fmt"
+	"os"
 	"slices"
+	"strconv"
 	"strings"
-
-	"martindotexe/AoC/internal/utils"
 )
 
-func Run() (int, int) {
-	input := utils.ReadFile("../data/2024/day02.txt")
-	return part1(input), part2(input)
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
+
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	input := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	result1 := part1(input)
+	result2 := part2(input)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
 func abs(i int) int {
@@ -48,10 +64,22 @@ func valid(nums []int) bool {
 	return isAscending || isDescending
 }
 
+func toInts(in []string) []int {
+	out := make([]int, len(in))
+	for i, v := range in {
+		n, err := strconv.Atoi(v)
+		if err != nil {
+			panic(err)
+		}
+		out[i] = n
+	}
+	return out
+}
+
 func part1(input []string) int {
 	sum := 0
 	for _, line := range input {
-		nums := utils.ToInts(strings.Split(line, " "))
+		nums := toInts(strings.Split(line, " "))
 		if valid(nums) {
 			sum++
 		}
@@ -62,7 +90,7 @@ func part1(input []string) int {
 func part2(input []string) int {
 	sum := 0
 	for _, line := range input {
-		nums := utils.ToInts(strings.Split(line, " "))
+		nums := toInts(strings.Split(line, " "))
 		for i := 0; i < len(nums); i++ {
 			if valid(slices.Concat(nums[:i], nums[i+1:])) {
 				sum++

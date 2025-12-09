@@ -1,11 +1,29 @@
-package day03
+package main
 
-import "martindotexe/AoC/internal/utils"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
-func Run() (int, int) {
-	in := utils.ReadFile("../data/2023/day03.txt")
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
 
-	return Part1(in), Part2(in)
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	in := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	result1 := part1(in)
+	result2 := part2(in)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
 type Point struct {
@@ -28,7 +46,7 @@ var matrix = [8][2]int{
 	{1, 1},
 }
 
-func Part1(in []string) int {
+func part1(in []string) int {
 	partSet := map[Point]bool{}
 	parts := make(map[Point][]int, 8) // Preallocate for 8 possible numbers.
 	currentNumber := 0
@@ -75,7 +93,7 @@ func Part1(in []string) int {
 	return sum
 }
 
-func Part2(in []string) int {
+func part2(in []string) int {
 	partSet := map[Part]bool{}
 	parts := make(map[Part][]int, 8) // Preallocate for 8 possible numbers.
 	currentNumber := 0

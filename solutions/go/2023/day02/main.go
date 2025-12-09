@@ -1,11 +1,12 @@
-package day02
+package main
 
 import (
+	"fmt"
 	"iter"
+	"os"
+	"slices"
 	"strconv"
 	"strings"
-
-	"martindotexe/AoC/internal/utils"
 )
 
 var maxColors = map[string]int{
@@ -14,14 +15,30 @@ var maxColors = map[string]int{
 	"blue":  14,
 }
 
-func Run() (int, int) {
-	in1 := utils.IterLines("../data/2023/day02.txt")
-	in2 := utils.IterLines("../data/2023/day02.txt")
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
 
-	return Part1(in1), Part2(in2)
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	in1 := slices.Values(lines)
+	in2 := slices.Values(lines)
+
+	result1 := part1(in1)
+	result2 := part2(in2)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
-func Part1(in iter.Seq[string]) int {
+func part1(in iter.Seq[string]) int {
 	sum := 0
 	for line := range in {
 		game := strings.Split(line, ": ")
@@ -57,7 +74,7 @@ func Part1(in iter.Seq[string]) int {
 	return sum
 }
 
-func Part2(in iter.Seq[string]) int {
+func part2(in iter.Seq[string]) int {
 	sum := 0
 	for line := range in {
 		game := strings.Split(line, ": ")

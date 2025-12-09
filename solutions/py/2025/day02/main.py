@@ -1,3 +1,6 @@
+import sys
+
+
 def invalidId(id: int):
     str_id = str(id)
     if len(str_id) % 2 != 0:
@@ -37,9 +40,9 @@ def advancedInvalidId(id: int):
     return False
 
 
-def partOne():
+def partOne(filepath):
     count = 0
-    with open("in.txt", "r") as file:
+    with open(filepath, "r") as file:
         lines = file.read()
 
     for line in lines.replace("\n", "").split(","):
@@ -51,9 +54,9 @@ def partOne():
     print(count)
 
 
-def partTwo():
+def partTwo(filepath):
     count = 0
-    with open("in.txt", "r") as file:
+    with open(filepath, "r") as file:
         lines = file.read()
 
     for line in lines.replace("\n", "").split(","):
@@ -66,5 +69,10 @@ def partTwo():
 
 
 if __name__ == "__main__":
-    partOne()
-    partTwo()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)
+    partTwo(filepath)

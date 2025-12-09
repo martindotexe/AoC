@@ -1,16 +1,43 @@
-package day05
+package main
 
 import (
+	"fmt"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
-
-	"martindotexe/AoC/internal/utils"
 )
 
-func Run() (int, int) {
-	input := utils.ReadFile("../data/2024/day05.txt")
-	return part1(input), part2(input)
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
+
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	input := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	result1 := part1(input)
+	result2 := part2(input)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
+}
+
+func toInts(in []string) []int {
+	out := make([]int, len(in))
+	for i, v := range in {
+		n, err := strconv.Atoi(v)
+		if err != nil {
+			panic(err)
+		}
+		out[i] = n
+	}
+	return out
 }
 
 func parseRules(input []string) (map[[2]int]bool, int) {
@@ -45,7 +72,7 @@ func part1(input []string) int {
 
 	for ; i < len(input); i++ {
 		nums := strings.Split(input[i], ",")
-		sortable := &sortByRule{rules, utils.ToInts(nums)}
+		sortable := &sortByRule{rules, toInts(nums)}
 		if sort.IsSorted(sortable) {
 			sum += sortable.objs[len(sortable.objs)/2]
 		}
@@ -60,7 +87,7 @@ func part2(input []string) int {
 
 	for ; i < len(input); i++ {
 		nums := strings.Split(input[i], ",")
-		sortable := &sortByRule{rules, utils.ToInts(nums)}
+		sortable := &sortByRule{rules, toInts(nums)}
 		if !sort.IsSorted(sortable) {
 			sort.Sort(sortable)
 			sum += sortable.objs[len(sortable.objs)/2]

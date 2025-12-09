@@ -1,11 +1,12 @@
-package day01
+package main
 
 import (
+	"fmt"
 	"iter"
+	"os"
+	"slices"
 	"strconv"
 	"strings"
-
-	"martindotexe/AoC/internal/utils"
 )
 
 type Node struct {
@@ -60,24 +61,44 @@ func zip(left, right []int) iter.Seq2[int, int] {
 	}
 }
 
-func Run() (int, int) {
-	input1 := utils.IterLines("../data/2024/day01.txt")
-	input2 := utils.IterLines("../data/2024/day01.txt")
-	return part1(input1), part2(input2)
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
+
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+
+	// Create iterators from lines
+	input1 := slices.Values(lines)
+	input2 := slices.Values(lines)
+
+	result1 := part1(input1)
+	result2 := part2(input2)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
 func part1(input iter.Seq[string]) int {
 	left, right := &Node{}, &Node{}
-	for i, line := range utils.Enumerate(input) {
+	first := true
+	for line := range input {
 		data := strings.Split(line, "   ")
 		l, lerr := strconv.Atoi(data[0])
 		r, rerr := strconv.Atoi(data[1])
 		if lerr != nil || rerr != nil {
 			panic("Failed to convert string to int")
 		}
-		if i == 0 {
+		if first {
 			left = newNode(l)
 			right = newNode(r)
+			first = false
 		} else {
 			left.push(l)
 			right.push(r)

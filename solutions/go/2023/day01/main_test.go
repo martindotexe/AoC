@@ -1,10 +1,10 @@
-package day01
+package main
 
 import (
+	"os"
 	"slices"
+	"strings"
 	"testing"
-
-	"martindotexe/AoC/internal/utils"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +17,7 @@ func TestPart1(t *testing.T) {
 		"treb7uchet",
 	})
 
-	assert.Equal(t, 142, Part1(input))
+	assert.Equal(t, 142, part1(input))
 }
 
 func TestPart2(t *testing.T) {
@@ -31,23 +31,27 @@ func TestPart2(t *testing.T) {
 		"7pqrstsixteen",
 	})
 
-	assert.Equal(t, 281, Part2(input))
+	assert.Equal(t, 281, part2(input))
 }
 
 func BenchmarkPart1(b *testing.B) {
-	in := utils.IterLines("../../../data/2023/day01.txt")
+	data, _ := os.ReadFile("../../../data/2023/day01.txt")
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+	in := slices.Values(lines)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Part1(in)
+		part1(in)
 	}
 }
 
 func BenchmarkPart2(b *testing.B) {
-	in := utils.IterLines("../../../data/2023/day01.txt")
+	data, _ := os.ReadFile("../../../data/2023/day01.txt")
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+	in := slices.Values(lines)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Part2(in)
+		part2(in)
 	}
 }

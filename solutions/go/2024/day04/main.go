@@ -1,17 +1,29 @@
-package day04
+package main
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
 
-func Run() (int, int) {
-	data, err := os.ReadFile("../data/2024/day04.txt")
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Fprintf(os.Stderr, "Usage: go run main.go <filepath>\n")
+		os.Exit(1)
+	}
+
+	filepath := os.Args[1]
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		panic(err)
 	}
 	input := string(data)
-	return part1(input), part2(input)
+
+	result1 := part1(input)
+	result2 := part2(input)
+
+	fmt.Printf("Part 1: %d\n", result1)
+	fmt.Printf("Part 2: %d\n", result2)
 }
 
 func parse(input string) [][]rune {

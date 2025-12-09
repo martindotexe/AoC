@@ -1,10 +1,10 @@
-package day04
+package main
 
 import (
+	"os"
 	"slices"
+	"strings"
 	"testing"
-
-	"martindotexe/AoC/internal/utils"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -19,14 +19,16 @@ func TestPart1(t *testing.T) {
 		"Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11",
 	})
 
-	assert.Equal(t, 13, Part1(in))
+	assert.Equal(t, 13, part1(in))
 }
 
 func BenchmarkPart1(b *testing.B) {
-	in := utils.IterLines("../../../data/2023/day04.txt")
+	data, _ := os.ReadFile("../../../data/2023/day04.txt")
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+	in := slices.Values(lines)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Part1(in)
+		part1(in)
 	}
 }

@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+
 export function partOne(input: string): number {
 	return input
 		.split("\n")
@@ -15,4 +17,20 @@ export function partOne(input: string): number {
 
 export function partTwo(input: string): number {
 	return 0
+}
+
+if (import.meta.main) {
+	if (process.argv.length < 3) {
+		console.error("Usage: bun index.ts <filepath>");
+		process.exit(1);
+	}
+
+	const filepath = process.argv[2];
+	const input = readFileSync(filepath, "utf-8");
+
+	const result1 = partOne(input);
+	const result2 = partTwo(input);
+
+	console.log(`Part 1: ${result1}`);
+	console.log(`Part 2: ${result2}`);
 }

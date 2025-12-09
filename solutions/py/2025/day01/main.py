@@ -1,10 +1,13 @@
-def partOne():
+import sys
+
+
+def partOne(filepath):
     min = 0
     max = 99
     dial = 50
     count = 0
 
-    with open("in.txt", "r") as file:
+    with open(filepath, "r") as file:
         lines = file.readlines()
         for line in lines:
             dir: str = line[0]
@@ -22,4 +25,9 @@ def partOne():
 
 
 if __name__ == "__main__":
-    partOne()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)

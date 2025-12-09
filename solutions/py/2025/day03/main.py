@@ -1,6 +1,9 @@
-def partOne():
+import sys
+
+
+def partOne(filepath):
     count = 0
-    with open("in.txt", "r") as file:
+    with open(filepath, "r") as file:
         for line in file.readlines():
             line = [int(d) for d in line.strip()]
 
@@ -12,11 +15,11 @@ def partOne():
         print(count)
 
 
-def partTwo():
+def partTwo(filepath):
     N = 12
 
     count = 0
-    with open("in.txt", "r") as file:
+    with open(filepath, "r") as file:
         for line in file.readlines():
             line = [int(d) for d in line.strip()]
 
@@ -33,5 +36,10 @@ def partTwo():
 
 
 if __name__ == "__main__":
-    partOne()
-    partTwo()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)
+    partTwo(filepath)

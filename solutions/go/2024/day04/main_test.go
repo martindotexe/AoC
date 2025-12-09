@@ -1,4 +1,4 @@
-package day04
+package main
 
 import (
 	"strings"

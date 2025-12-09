@@ -1,8 +1,10 @@
+import sys
+
 C = "@"
 
 
-def partOne():
-    with open("in.txt", "r") as file:
+def partOne(filepath):
+    with open(filepath, "r") as file:
         lines = [line.strip() for line in file.readlines()]
 
     w, h = len(lines[0]), len(lines)
@@ -34,4 +36,9 @@ def partOne():
 
 
 if __name__ == "__main__":
-    partOne()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)

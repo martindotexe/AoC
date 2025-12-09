@@ -1,8 +1,9 @@
 from functools import cache
+import sys
 
 
-def partOne():
-    with open("in.txt", "r") as file:
+def partOne(filepath):
+    with open(filepath, "r") as file:
         grid = [line.strip() for line in file.readlines()]
 
         curr = {grid[0].index("S")}
@@ -26,8 +27,8 @@ def partOne():
         print(splits)
 
 
-def partTwo():
-    with open("in.txt", "r") as file:
+def partTwo(filepath):
+    with open(filepath, "r") as file:
         grid = [line.strip() for line in file.readlines()]
 
         @cache
@@ -42,5 +43,10 @@ def partTwo():
 
 
 if __name__ == "__main__":
-    partOne()
-    partTwo()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)
+    partTwo(filepath)

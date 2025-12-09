@@ -1,5 +1,8 @@
-def partOne():
-    with open("in.txt", "r") as file:
+import sys
+
+
+def partOne(filepath):
+    with open(filepath, "r") as file:
         fresh, ingredients = file.read().split("\n\n")
 
         fresh = [list(map(int, d.split("-"))) for d in fresh.splitlines()]
@@ -15,8 +18,8 @@ def partOne():
         print(count)
 
 
-def partTwo():
-    with open("in.txt", "r") as file:
+def partTwo(filepath):
+    with open(filepath, "r") as file:
         fresh, _ = file.read().split("\n\n")
 
         fresh = [list(map(int, d.split("-"))) for d in fresh.splitlines()]
@@ -40,5 +43,10 @@ def partTwo():
 
 
 if __name__ == "__main__":
-    partOne()
-    partTwo()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <filepath>", file=sys.stderr)
+        sys.exit(1)
+
+    filepath = sys.argv[1]
+    partOne(filepath)
+    partTwo(filepath)
