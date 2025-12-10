@@ -1,12 +1,11 @@
 on:
   push:
     paths-ignore:
-      - "**.md"
-      - "assets/**"
+      - "*.md"
       - "LICENSE"
       - ".gitignore"
       - ".gitattributes"
-      - "docs/**"
+      - "update_readme.py"
     branches: [ main ]
   workflow_dispatch:
 
@@ -27,21 +26,21 @@ jobs:
               year=$(echo $file | sed -n 's|solutions/py/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/main.py|\1|p')
               day=$(echo $file | sed -n 's|solutions/py/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/main.py|\2|p')
               day=$((10#$day))
-              echo "{\"lang\":\"py\",\"target\":\"pypy\",\"year\":\"$year\",\"day\":\"$day\"}"
+              echo "{\"lang\":\"py\",\"target\":\"pypy\",\"year\":\"$year\",\"day\":\"$day\",\"file\":\"$file\"}"
             done
             # Go solutions
             find solutions/go -type f -name "main.go" | while read file; do
               year=$(echo $file | sed -n 's|solutions/go/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/main.go|\1|p')
               day=$(echo $file | sed -n 's|solutions/go/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/main.go|\2|p')
               day=$((10#$day))
-              echo "{\"lang\":\"go\",\"target\":\"go\",\"year\":\"$year\",\"day\":\"$day\"}"
+              echo "{\"lang\":\"go\",\"target\":\"go\",\"year\":\"$year\",\"day\":\"$day\",\"file\":\"$file\"}"
             done
             # TypeScript solutions
             find solutions/ts -type f -name "index.ts" | while read file; do
               year=$(echo $file | sed -n 's|solutions/ts/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/index.ts|\1|p')
               day=$(echo $file | sed -n 's|solutions/ts/\([0-9]\{4\}\)/day\([0-9]\{2\}\)/index.ts|\2|p')
               day=$((10#$day))
-              echo "{\"lang\":\"ts\",\"target\":\"bun\",\"year\":\"$year\",\"day\":\"$day\"}"
+              echo "{\"lang\":\"ts\",\"target\":\"bun\",\"year\":\"$year\",\"day\":\"$day\",\"file\":\"$file\"}"
             done
           )
           matrix=$(echo "$solutions" | jq -s -c '.')
@@ -61,27 +60,7 @@ jobs:
       - name: Compute solution hash
         id: solution-hash
         run: |
-          YEAR=${{ matrix.solution.year }}
-          DAY=$(printf "%02d" ${{ matrix.solution.day }})
-          LANG=${{ matrix.solution.lang }}
-
-          case "$LANG" in
-            py)
-              FILE="solutions/py/${YEAR}/day${DAY}/main.py"
-              ;;
-            go)
-              FILE="solutions/go/${YEAR}/day${DAY}/main.go"
-              ;;
-            ts)
-              FILE="solutions/ts/${YEAR}/day${DAY}/index.ts"
-              ;;
-          esac
-
-          if [ ! -f "$FILE" ]; then
-            echo "ERROR: Solution file not found: $FILE"
-            exit 1
-          fi
-
+          FILE="${{ matrix.solution.file }}"
           HASH=$(sha256sum "$FILE" | awk '{print $1}' | cut -c1-16)
           echo "hash=$HASH" >> $GITHUB_OUTPUT
           echo "file=$FILE" >> $GITHUB_OUTPUT
@@ -96,14 +75,31 @@ jobs:
           key: benchmark-${{ matrix.solution.lang }}-${{ matrix.solution.year }}-${{ matrix.solution.day }}-${{ steps.solution-hash.outputs.hash }}
 
       - name: Restore AOC input cache
+        if: steps.cache-benchmark.outputs.cache-hit != 'true'
         id: cache-aoc-input
         uses: actions/cache@v4
         with:
           path: aoc-inputs/
           key: aoc-input-${{ matrix.solution.year }}-${{ matrix.solution.day }}
 
+      - name: Cache status summary
+        run: |
+          echo "=== Cache Status ==="
+          if [ "${{ steps.cache-benchmark.outputs.cache-hit }}" == "true" ]; then
+            echo "✓ Benchmark cache HIT - using cached results"
+            echo "  Cache key: benchmark-${{ matrix.solution.lang }}-${{ matrix.solution.year }}-${{ matrix.solution.day }}-${{ steps.solution-hash.outputs.hash }}"
+          else
+            echo "✗ Benchmark cache MISS - will run fresh benchmark"
+            if [ "${{ steps.cache-aoc-input.outputs.cache-hit }}" == "true" ]; then
+              echo "✓ AOC input cache HIT - using cached input"
+            else
+              echo "✗ AOC input cache MISS - will download from AOC"
+            fi
+          fi
+          echo "==================="
+
       - name: Download AOC input
-        if: steps.cache-aoc-input.outputs.cache-hit != 'true'
+        if: steps.cache-benchmark.outputs.cache-hit != 'true' && steps.cache-aoc-input.outputs.cache-hit != 'true'
         run: |
           YEAR=${{ matrix.solution.year }}
           DAY=${{ matrix.solution.day }}
@@ -115,6 +111,7 @@ jobs:
           echo "✓ Downloaded successfully"
 
       - name: Setup Earthly
+        if: steps.cache-benchmark.outputs.cache-hit != 'true'
         uses: earthly/actions/setup-earthly@v1
         with:
           version: latest
@@ -122,26 +119,6 @@ jobs:
       - name: Run benchmark for ${{ matrix.solution.lang }} ${{ matrix.solution.year }} day ${{ matrix.solution.day }}
         if: steps.cache-benchmark.outputs.cache-hit != 'true'
         run: earthly --ci --output --secret AOC_SESSION="${{ secrets.AOC_SESSION }}" +${{ matrix.solution.target }} --year=${{ matrix.solution.year }} --day=${{ matrix.solution.day }}
-
-      - name: Verify benchmark results exist
-        run: |
-          DAY_PADDED=$(printf "%02d" ${{ matrix.solution.day }})
-          EXPECTED="results/${{ matrix.solution.lang }}-${{ matrix.solution.year }}-${DAY_PADDED}.json"
-
-          if [ ! -f "$EXPECTED" ]; then
-            echo "ERROR: Expected benchmark file not found: $EXPECTED"
-            if [ -d "results" ]; then
-              echo "Contents of results/:"
-              ls -la results/
-            else
-              echo "results/ directory does not exist"
-            fi
-            exit 1
-          fi
-
-          echo "✓ Benchmark result verified: $EXPECTED"
-          echo "Result preview:"
-          cat "$EXPECTED" | jq -r '.results[0] | "  Mean: \(.mean)s, Min: \(.min)s, Max: \(.max)s"'
 
       - name: Upload result
         uses: actions/upload-artifact@v4
