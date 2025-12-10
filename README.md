@@ -12,7 +12,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 - 2022: 1/50 ⭐
 - 2021: 5/50 ⭐
 
-# Benchmarks
+## Benchmarks
 
 ## Overall
 
@@ -56,4 +56,13 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 ---
 
-## Footer
+## Acknowledgment
+
+The benchmarks are very much inspired by
+[Niklas Heers speed comparison of languages](https://github.com/niklas-heer/speed-comparison)
+and [advent of code in rust](https://github.com/maneatingape/advent-of-code-rust).
+Using [Earthly](https://github.com/earthly/earthly) to set up enviorments for benchmarking
+as part of CI. Benchmarking each day using [hyperfine](https://github.com/sharkdp/hyperfine).
+
+[HyperNeutrinos YouTube channel](https://www.youtube.com/@hyper-neutrino) has been
+a great resource for understanding the more comlex problems.

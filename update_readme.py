@@ -218,7 +218,7 @@ def update_readme(
 
     # Overall table
     sections.append("")
-    sections.append("## Overall")
+    sections.append("### Overall")
     sections.append("")
     sections.append("| Year | Min (seconds) | Stars | Language                  |")
     sections.append("|------|---------------|-------|---------------------------|")
@@ -227,7 +227,7 @@ def update_readme(
 
     # Individual year tables
     for year in sorted(benchmarks.keys(), reverse=True):
-        sections.append(f"## {year}")
+        sections.append(f"### {year}")
         sections.append("")
         sections.append("| Day | Min (seconds) | Stars | Language                  |")
         sections.append("|-----|---------------|-------|---------------------------|")
@@ -238,7 +238,7 @@ def update_readme(
 
     # Find and replace content between # Benchmarks and ---
     # Pattern matches from "# Benchmarks" to the line before "---"
-    pattern = r"(# Benchmarks\n)(.*?)(\n---)"
+    pattern = r"(## Benchmarks\n)(.*?)(\n---)"
 
     replacement = r"\1" + new_benchmark_content + r"\3"
 
