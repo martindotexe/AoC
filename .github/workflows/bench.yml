@@ -58,13 +58,90 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Compute solution hash
+        id: solution-hash
+        run: |
+          YEAR=${{ matrix.solution.year }}
+          DAY=$(printf "%02d" ${{ matrix.solution.day }})
+          LANG=${{ matrix.solution.lang }}
+
+          case "$LANG" in
+            py)
+              FILE="solutions/py/${YEAR}/day${DAY}/main.py"
+              ;;
+            go)
+              FILE="solutions/go/${YEAR}/day${DAY}/main.go"
+              ;;
+            ts)
+              FILE="solutions/ts/${YEAR}/day${DAY}/index.ts"
+              ;;
+          esac
+
+          if [ ! -f "$FILE" ]; then
+            echo "ERROR: Solution file not found: $FILE"
+            exit 1
+          fi
+
+          HASH=$(sha256sum "$FILE" | awk '{print $1}' | cut -c1-16)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+          echo "Solution file: $FILE"
+          echo "Hash: $HASH"
+
+      - name: Restore cached benchmark
+        id: cache-benchmark
+        uses: actions/cache@v4
+        with:
+          path: results/
+          key: benchmark-${{ matrix.solution.lang }}-${{ matrix.solution.year }}-${{ matrix.solution.day }}-${{ steps.solution-hash.outputs.hash }}
+
+      - name: Restore AOC input cache
+        id: cache-aoc-input
+        uses: actions/cache@v4
+        with:
+          path: aoc-inputs/
+          key: aoc-input-${{ matrix.solution.year }}-${{ matrix.solution.day }}
+
+      - name: Download AOC input
+        if: steps.cache-aoc-input.outputs.cache-hit != 'true'
+        run: |
+          YEAR=${{ matrix.solution.year }}
+          DAY=${{ matrix.solution.day }}
+          mkdir -p aoc-inputs
+          echo "Downloading AOC input for $YEAR day $DAY..."
+          curl -f -b "session=${{ secrets.AOC_SESSION }}" \
+            "https://adventofcode.com/$YEAR/day/$DAY/input" \
+            -o "aoc-inputs/$YEAR-$DAY.txt"
+          echo "✓ Downloaded successfully"
+
       - name: Setup Earthly
         uses: earthly/actions/setup-earthly@v1
         with:
           version: latest
 
       - name: Run benchmark for ${{ matrix.solution.lang }} ${{ matrix.solution.year }} day ${{ matrix.solution.day }}
+        if: steps.cache-benchmark.outputs.cache-hit != 'true'
         run: earthly --ci --output --secret AOC_SESSION="${{ secrets.AOC_SESSION }}" +${{ matrix.solution.target }} --year=${{ matrix.solution.year }} --day=${{ matrix.solution.day }}
+
+      - name: Verify benchmark results exist
+        run: |
+          DAY_PADDED=$(printf "%02d" ${{ matrix.solution.day }})
+          EXPECTED="results/${{ matrix.solution.lang }}-${{ matrix.solution.year }}-${DAY_PADDED}.json"
+
+          if [ ! -f "$EXPECTED" ]; then
+            echo "ERROR: Expected benchmark file not found: $EXPECTED"
+            if [ -d "results" ]; then
+              echo "Contents of results/:"
+              ls -la results/
+            else
+              echo "results/ directory does not exist"
+            fi
+            exit 1
+          fi
+
+          echo "✓ Benchmark result verified: $EXPECTED"
+          echo "Result preview:"
+          cat "$EXPECTED" | jq -r '.results[0] | "  Mean: \(.mean)s, Min: \(.min)s, Max: \(.max)s"'
 
       - name: Upload result
         uses: actions/upload-artifact@v4

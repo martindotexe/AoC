@@ -31,17 +31,25 @@ PREPARE_ALPINE:
   FUNCTION
   RUN apk add --no-cache hyperfine curl
 
-# Get AoC input based on year and day, then cache it
+# Get AoC input based on year and day
+# First tries to use pre-downloaded input from CI (aoc-inputs/)
+# Falls back to downloading from AOC website (local development)
 GET_INPUT:
   FUNCTION
   ARG --required year
   ARG --required day
+  # Check if input was pre-downloaded (CI environment)
+  COPY --if-exists aoc-inputs/$year-$day.txt ./input.txt
+  # Fallback to download if not found (local development)
   RUN --mount=type=cache,target=/cache/aoc \
       --secret AOC_SESSION \
-      if [ ! -f /cache/aoc/$year-$day.txt ]; then \
-        curl -b "session=$AOC_SESSION" "https://adventofcode.com/$year/day/$day/input" -o /cache/aoc/$year-$day.txt; \
-      fi && \
-      cp /cache/aoc/$year-$day.txt ./input.txt
+      if [ ! -f ./input.txt ]; then \
+        mkdir -p /cache/aoc && \
+        if [ ! -f /cache/aoc/$year-$day.txt ]; then \
+          curl -b "session=$AOC_SESSION" "https://adventofcode.com/$year/day/$day/input" -o /cache/aoc/$year-$day.txt || exit 1; \
+        fi && \
+        cp /cache/aoc/$year-$day.txt ./input.txt; \
+      fi
 
 # Languages
 
