@@ -26,21 +26,21 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 | Day | Min (seconds) | Stars | Language                  |
 |-----|---------------|-------|---------------------------|
-| 01  | 0.036         | xxx   | **py**                    |
-| 02  | 0.216         | xxx   | **py**                    |
-| 03  | 0.040         | xxx   | **py**                    |
-| 04  | 0.044         | xxx   | **py**                    |
+| 01  | 0.035         | xxx   | **py**                    |
+| 02  | 0.214         | xxx   | **py**                    |
+| 03  | 0.038         | xxx   | **py**                    |
+| 04  | 0.046         | xxx   | **py**                    |
 | 05  | 0.034         | xxx   | **py**                    |
-| 06  | 0.051         | xxx   | **py**                    |
-| 07  | 0.059         | xxx   | **py**                    |
-| 09  | 0.036         | xxx   | **py**                    |
+| 06  | 0.054         | xxx   | **py**                    |
+| 07  | 0.060         | xxx   | **py**                    |
+| 09  | 0.037         | xxx   | **py**                    |
 
 ### 2024
 
 | Day | Min (seconds) | Stars | Language                  |
 |-----|---------------|-------|---------------------------|
 | 01  | 0.001         | xxx   | **go**, ts                |
-| 02  | 0.002         | xxx   | **go**, ts                |
+| 02  | 0.001         | xxx   | **go**, ts                |
 | 03  | 0.003         | xxx   | **go**                    |
 | 04  | 0.002         | xxx   | **go**                    |
 | 05  | 0.002         | xxx   | **go**                    |
