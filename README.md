@@ -16,44 +16,44 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 ### Overall
 
-| Year | Min (seconds) | Language                  |
-|------|---------------|---------------------------|
-| 2025 | 0.568         | **py**                    |
-| 2024 | 0.009         | **go**, ts                |
-| 2023 | 0.006         | **go**                    |
+| Year | Min (seconds) | Language |
+|------|---------------|----------|
+| [2025](https://adventofcode.com/2025) | 0.568 | [**py**](solutions/py/2025) |
+| [2024](https://adventofcode.com/2024) | 0.009 | [**go**](solutions/go/2024), [ts](solutions/ts/2024) |
+| [2023](https://adventofcode.com/2023) | 0.006 | [**go**](solutions/go/2023) |
 
 ### 2025
 
-| Day | Min (seconds) | Language                  |
-|-----|---------------|---------------------------|
-| 01  | 0.035         | **py**                    |
-| 02  | 0.214         | **py**                    |
-| 03  | 0.038         | **py**                    |
-| 04  | 0.046         | **py**                    |
-| 05  | 0.034         | **py**                    |
-| 06  | 0.054         | **py**                    |
-| 07  | 0.060         | **py**                    |
-| 09  | 0.037         | **py**                    |
-| 10  | 0.051         | **py**                    |
+| Day | Min (seconds) | Language |
+|-----|---------------|----------|
+| [01](https://adventofcode.com/2025/day/1) | 0.035 | [**py**](solutions/py/2025/day01/main.py) |
+| [02](https://adventofcode.com/2025/day/2) | 0.214 | [**py**](solutions/py/2025/day02/main.py) |
+| [03](https://adventofcode.com/2025/day/3) | 0.038 | [**py**](solutions/py/2025/day03/main.py) |
+| [04](https://adventofcode.com/2025/day/4) | 0.046 | [**py**](solutions/py/2025/day04/main.py) |
+| [05](https://adventofcode.com/2025/day/5) | 0.034 | [**py**](solutions/py/2025/day05/main.py) |
+| [06](https://adventofcode.com/2025/day/6) | 0.054 | [**py**](solutions/py/2025/day06/main.py) |
+| [07](https://adventofcode.com/2025/day/7) | 0.060 | [**py**](solutions/py/2025/day07/main.py) |
+| [09](https://adventofcode.com/2025/day/9) | 0.037 | [**py**](solutions/py/2025/day09/main.py) |
+| [10](https://adventofcode.com/2025/day/10) | 0.051 | [**py**](solutions/py/2025/day10/main.py) |
 
 ### 2024
 
-| Day | Min (seconds) | Language                  |
-|-----|---------------|---------------------------|
-| 01  | 0.001         | **go**, ts                |
-| 02  | 0.001         | **go**, ts                |
-| 03  | 0.003         | **go**                    |
-| 04  | 0.002         | **go**                    |
-| 05  | 0.002         | **go**                    |
+| Day | Min (seconds) | Language |
+|-----|---------------|----------|
+| [01](https://adventofcode.com/2024/day/1) | 0.001 | [**go**](solutions/go/2024/day01/main.go), [ts](solutions/ts/2024/day01/index.ts) |
+| [02](https://adventofcode.com/2024/day/2) | 0.001 | [**go**](solutions/go/2024/day02/main.go), [ts](solutions/ts/2024/day02/index.ts) |
+| [03](https://adventofcode.com/2024/day/3) | 0.003 | [**go**](solutions/go/2024/day03/main.go) |
+| [04](https://adventofcode.com/2024/day/4) | 0.002 | [**go**](solutions/go/2024/day04/main.go) |
+| [05](https://adventofcode.com/2024/day/5) | 0.002 | [**go**](solutions/go/2024/day05/main.go) |
 
 ### 2023
 
-| Day | Min (seconds) | Language                  |
-|-----|---------------|---------------------------|
-| 01  | 0.002         | **go**                    |
-| 02  | 0.001         | **go**                    |
-| 03  | 0.002         | **go**                    |
-| 04  | 0.001         | **go**                    |
+| Day | Min (seconds) | Language |
+|-----|---------------|----------|
+| [01](https://adventofcode.com/2023/day/1) | 0.002 | [**go**](solutions/go/2023/day01/main.go) |
+| [02](https://adventofcode.com/2023/day/2) | 0.001 | [**go**](solutions/go/2023/day02/main.go) |
+| [03](https://adventofcode.com/2023/day/3) | 0.002 | [**go**](solutions/go/2023/day03/main.go) |
+| [04](https://adventofcode.com/2023/day/4) | 0.001 | [**go**](solutions/go/2023/day04/main.go) |
 
 ---
 
