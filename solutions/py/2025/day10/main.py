@@ -4,10 +4,10 @@ from itertools import combinations
 
 def partOne(filepath):
     with open(filepath, "r") as file:
-        lines = [line.split() for line in file.readlines()]
         total = 0
 
-        for target, *buttons, _ in lines:
+        for line in file.readlines():
+            target, *buttons, _ = line.split()
             buttons = [set(map(int, button[1:-1].split(","))) for button in buttons]
             target = {index for index, light in enumerate(target[1:-1]) if light == "#"}
 
