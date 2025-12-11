@@ -18,7 +18,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 | Year | Min (seconds) | Stars | Language                  |
 |------|---------------|-------|---------------------------|
-| 2025 | 0.517         | xxx   | **py**                    |
+| 2025 | 0.568         | xxx   | **py**                    |
 | 2024 | 0.009         | xxx   | **go**, ts                |
 | 2023 | 0.006         | xxx   | **go**                    |
 
@@ -34,6 +34,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 | 06  | 0.054         | xxx   | **py**                    |
 | 07  | 0.060         | xxx   | **py**                    |
 | 09  | 0.037         | xxx   | **py**                    |
+| 10  | 0.051         | xxx   | **py**                    |
 
 ### 2024
 
