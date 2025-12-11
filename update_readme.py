@@ -113,25 +113,43 @@ def find_fastest_language(year_totals: Dict[str, float]) -> str:
     return min(year_totals.items(), key=lambda x: x[1])[0]
 
 
-def format_language_list(languages: List[str], fastest: str) -> str:
+def format_language_list(
+    languages: List[str], fastest: str, year: int, day: Optional[int] = None
+) -> str:
     """
-    Format language list with fastest in bold.
+    Format language list with fastest in bold and links to solution files.
 
     Args:
         languages: List of language names
         fastest: Name of fastest language
+        year: Year number
+        day: Day number (optional, None for overall table)
 
     Returns:
-        Formatted string like "**Go**, PyPy, Bun"
+        Formatted string like "[**Go**](path), [PyPy](path), [Bun](path)"
     """
+    # Map language names to their file names
+    lang_file_map = {"py": "main.py", "go": "main.go", "ts": "index.ts"}
+
     sorted_langs = sorted(languages)
     formatted = []
 
     for lang in sorted_langs:
-        if lang == fastest:
-            formatted.append(f"**{lang}**")
+        # Construct relative path to solution
+        if day is not None:
+            # For specific day: solutions/py/2025/day01/main.py
+            day_str = f"{day:02d}"
+            file_name = lang_file_map.get(lang, "main.py")
+            path = f"solutions/{lang}/{year}/day{day_str}/{file_name}"
         else:
-            formatted.append(lang)
+            # For overall table, link to year directory
+            path = f"solutions/{lang}/{year}"
+
+        # Format with bold if fastest
+        if lang == fastest:
+            formatted.append(f"[**{lang}**]({path})")
+        else:
+            formatted.append(f"[{lang}]({path})")
 
     return ", ".join(formatted)
 
@@ -182,7 +200,9 @@ def fetch_star_counts(session_token: str) -> Dict[int, int]:
         if star_counts:
             print(f"Fetched star counts for {len(star_counts)} years")
         else:
-            print("Warning: No star counts found in response, pattern may need updating")
+            print(
+                "Warning: No star counts found in response, pattern may need updating"
+            )
 
         return star_counts
 
@@ -214,7 +234,7 @@ def update_progress_section(content: str, star_counts: Dict[int, int]) -> str:
         return content
 
     # Pattern to match the My Progress section
-    pattern = r'(## My Progress\n\nOverall Advent of Code progress.*?\n\n)((?:- \d{4}: \d+/\d+ ⭐\n)+)'
+    pattern = r"(## My Progress\n\nOverall Advent of Code progress.*?\n\n)((?:- \d{4}: \d+/\d+ ⭐\n)+)"
     match = re.search(pattern, content, re.DOTALL)
 
     if not match:
@@ -225,10 +245,10 @@ def update_progress_section(content: str, star_counts: Dict[int, int]) -> str:
     progress_lines = match.group(2)
 
     # Parse existing year lines
-    year_pattern = r'- (\d{4}): \d+/(\d+) ⭐'
+    year_pattern = r"- (\d{4}): \d+/(\d+) ⭐"
     year_lines = []
 
-    for line in progress_lines.strip().split('\n'):
+    for line in progress_lines.strip().split("\n"):
         year_match = re.match(year_pattern, line)
         if year_match:
             year = int(year_match.group(1))
@@ -241,7 +261,7 @@ def update_progress_section(content: str, star_counts: Dict[int, int]) -> str:
                 year_lines.append(line)
 
     # Reconstruct the section
-    new_progress = header + '\n'.join(year_lines) + '\n'
+    new_progress = header + "\n".join(year_lines) + "\n"
 
     # Replace in content
     new_content = re.sub(pattern, new_progress, content, flags=re.DOTALL)
@@ -268,11 +288,12 @@ def generate_overall_table(benchmarks: Dict, year_totals: Dict) -> str:
         languages = list(totals.keys())
 
         min_time = totals[fastest]
-        lang_list = format_language_list(languages, fastest)
+        lang_list = format_language_list(languages, fastest, year)
 
         # Format with proper spacing to align with column headers
-        time_str = f"{min_time:.3f}".ljust(13)
-        rows.append(f"| {year} | {time_str} | {lang_list.ljust(25)} |")
+        time_str = f"{min_time:.3f}"
+        year_link = f"[{year}](https://adventofcode.com/{year})"
+        rows.append(f"| {year_link} | {time_str} | {lang_list} |")
 
     return "\n".join(rows)
 
@@ -297,13 +318,16 @@ def generate_year_table(year: int, days: Dict[int, Dict[str, float]]) -> str:
         fastest_lang = min(languages.items(), key=lambda x: x[1])[0]
         min_time = languages[fastest_lang]
 
-        # Format language list with fastest in bold
-        lang_list = format_language_list(list(languages.keys()), fastest_lang)
+        # Format language list with fastest in bold and links
+        lang_list = format_language_list(
+            list(languages.keys()), fastest_lang, year, day
+        )
 
         day_str = f"{day:02d}"
         # Format with proper spacing to align with column headers
-        time_str = f"{min_time:.3f}".ljust(13)
-        rows.append(f"| {day_str}  | {time_str} | {lang_list.ljust(25)} |")
+        time_str = f"{min_time:.3f}"
+        day_link = f"[{day_str}](https://adventofcode.com/{year}/day/{day})"
+        rows.append(f"| {day_link} | {time_str} | {lang_list} |")
 
     return "\n".join(rows)
 
@@ -346,8 +370,8 @@ def update_readme(
     sections.append("")
     sections.append("### Overall")
     sections.append("")
-    sections.append("| Year | Min (seconds) | Language                  |")
-    sections.append("|------|---------------|---------------------------|")
+    sections.append("| Year | Min (seconds) | Language |")
+    sections.append("|------|---------------|----------|")
     sections.append(generate_overall_table(benchmarks, year_totals))
     sections.append("")
 
@@ -355,8 +379,8 @@ def update_readme(
     for year in sorted(benchmarks.keys(), reverse=True):
         sections.append(f"### {year}")
         sections.append("")
-        sections.append("| Day | Min (seconds) | Language                  |")
-        sections.append("|-----|---------------|---------------------------|")
+        sections.append("| Day | Min (seconds) | Language |")
+        sections.append("|-----|---------------|----------|")
         sections.append(generate_year_table(year, benchmarks[year]))
         sections.append("")
 
