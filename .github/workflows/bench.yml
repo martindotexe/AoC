@@ -160,7 +160,7 @@ jobs:
           python-version: '3.x'
 
       - name: Update README with benchmarks
-        run: python update_readme.py benchmarks/
+        run: python update_readme.py benchmarks/ --session ${{ secrets.AOC_SESSION }}
 
       - name: Commit and push if changed
         run: |

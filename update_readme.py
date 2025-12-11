@@ -8,10 +8,13 @@ Usage:
 
 import argparse
 import json
+import os
 import re
 from pathlib import Path
 from collections import defaultdict
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Optional
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
 
 
 def parse_filename(filename: str) -> Tuple[str, int, int]:
@@ -133,6 +136,119 @@ def format_language_list(languages: List[str], fastest: str) -> str:
     return ", ".join(formatted)
 
 
+def fetch_star_counts(session_token: str) -> Dict[int, int]:
+    """
+    Fetch star counts from adventofcode.com/events.
+
+    Args:
+        session_token: AOC session cookie value
+
+    Returns:
+        Dict mapping year to star count: {2025: 12, 2024: 11, ...}
+        Returns empty dict on failure
+    """
+    if not session_token:
+        print("Warning: No AOC session token provided, skipping star count update")
+        return {}
+
+    try:
+        url = "https://adventofcode.com/events"
+        request = Request(url)
+        request.add_header("Cookie", f"session={session_token}")
+        request.add_header(
+            "User-Agent", "github.com/yourusername/aoc via python/update_readme.py"
+        )
+
+        with urlopen(request, timeout=10) as response:
+            html = response.read().decode("utf-8")
+
+        # Parse star counts from events page
+        # Pattern looks for: [YYYY] followed by star count
+        # The events page shows something like: "[2025] 12*" or similar
+        star_counts = {}
+
+        # Try to find patterns like: /YYYY">...N*
+        # This regex captures year and stars from links
+        pattern = r'/(\d{4})">.*?(\d+)\s*\*'
+        matches = re.findall(pattern, html, re.DOTALL)
+
+        for year_str, stars_str in matches:
+            year = int(year_str)
+            stars = int(stars_str)
+            # Only include years from 2015 onwards (when AoC started)
+            if 2015 <= year <= 2030:
+                star_counts[year] = stars
+
+        if star_counts:
+            print(f"Fetched star counts for {len(star_counts)} years")
+        else:
+            print("Warning: No star counts found in response, pattern may need updating")
+
+        return star_counts
+
+    except HTTPError as e:
+        print(f"HTTP Error fetching star counts: {e.code} - {e.reason}")
+        if e.code == 401:
+            print("Invalid session token - please check your AOC_SESSION value")
+        return {}
+    except URLError as e:
+        print(f"Network error fetching star counts: {e.reason}")
+        return {}
+    except Exception as e:
+        print(f"Unexpected error fetching star counts: {e}")
+        return {}
+
+
+def update_progress_section(content: str, star_counts: Dict[int, int]) -> str:
+    """
+    Update the "My Progress" section in README with star counts.
+
+    Args:
+        content: Current README content
+        star_counts: Dict mapping year to star count
+
+    Returns:
+        Updated README content
+    """
+    if not star_counts:
+        return content
+
+    # Pattern to match the My Progress section
+    pattern = r'(## My Progress\n\nOverall Advent of Code progress.*?\n\n)((?:- \d{4}: \d+/\d+ ⭐\n)+)'
+    match = re.search(pattern, content, re.DOTALL)
+
+    if not match:
+        print("Warning: Could not find 'My Progress' section in README")
+        return content
+
+    header = match.group(1)
+    progress_lines = match.group(2)
+
+    # Parse existing year lines
+    year_pattern = r'- (\d{4}): \d+/(\d+) ⭐'
+    year_lines = []
+
+    for line in progress_lines.strip().split('\n'):
+        year_match = re.match(year_pattern, line)
+        if year_match:
+            year = int(year_match.group(1))
+            max_stars = year_match.group(2)
+            # Use fetched count if available, otherwise keep existing
+            stars = star_counts.get(year)
+            if stars is not None:
+                year_lines.append(f"- {year}: {stars}/{max_stars} ⭐")
+            else:
+                year_lines.append(line)
+
+    # Reconstruct the section
+    new_progress = header + '\n'.join(year_lines) + '\n'
+
+    # Replace in content
+    new_content = re.sub(pattern, new_progress, content, flags=re.DOTALL)
+
+    return new_content
+
+
 def generate_overall_table(benchmarks: Dict, year_totals: Dict) -> str:
     """
     Generate markdown table rows for the Overall section.
@@ -156,7 +272,7 @@ def generate_overall_table(benchmarks: Dict, year_totals: Dict) -> str:
 
         # Format with proper spacing to align with column headers
         time_str = f"{min_time:.3f}".ljust(13)
-        rows.append(f"| {year} | {time_str} | xxx   | {lang_list.ljust(25)} |")
+        rows.append(f"| {year} | {time_str} | {lang_list.ljust(25)} |")
 
     return "\n".join(rows)
 
@@ -187,28 +303,38 @@ def generate_year_table(year: int, days: Dict[int, Dict[str, float]]) -> str:
         day_str = f"{day:02d}"
         # Format with proper spacing to align with column headers
         time_str = f"{min_time:.3f}".ljust(13)
-        rows.append(f"| {day_str}  | {time_str} | xxx   | {lang_list.ljust(25)} |")
+        rows.append(f"| {day_str}  | {time_str} | {lang_list.ljust(25)} |")
 
     return "\n".join(rows)
 
 
 def update_readme(
-    benchmarks: Dict[int, Dict[int, Dict[str, float]]], readme_path: Path
+    benchmarks: Dict[int, Dict[int, Dict[str, float]]],
+    readme_path: Path,
+    session_token: Optional[str] = None,
 ):
     """
-    Update README.md with benchmark results.
+    Update README.md with benchmark results and star counts.
 
     Replaces content between '# Benchmark' heading and '---' line with:
     - Overall stats table for all years
     - Individual tables for each year
 
+    Optionally updates "My Progress" section with star counts from AoC.
+
     Args:
         benchmarks: Nested dict from load_benchmarks()
         readme_path: Path to README.md file
+        session_token: Optional AOC session token for fetching star counts
     """
     # Read current README
     with open(readme_path, "r") as f:
         content = f.read()
+
+    # Fetch and update star counts if session token provided
+    if session_token:
+        star_counts = fetch_star_counts(session_token)
+        content = update_progress_section(content, star_counts)
 
     # Calculate year totals
     year_totals = calculate_year_totals(benchmarks)
@@ -220,8 +346,8 @@ def update_readme(
     sections.append("")
     sections.append("### Overall")
     sections.append("")
-    sections.append("| Year | Min (seconds) | Stars | Language                  |")
-    sections.append("|------|---------------|-------|---------------------------|")
+    sections.append("| Year | Min (seconds) | Language                  |")
+    sections.append("|------|---------------|---------------------------|")
     sections.append(generate_overall_table(benchmarks, year_totals))
     sections.append("")
 
@@ -229,8 +355,8 @@ def update_readme(
     for year in sorted(benchmarks.keys(), reverse=True):
         sections.append(f"### {year}")
         sections.append("")
-        sections.append("| Day | Min (seconds) | Stars | Language                  |")
-        sections.append("|-----|---------------|-------|---------------------------|")
+        sections.append("| Day | Min (seconds) | Language                  |")
+        sections.append("|-----|---------------|---------------------------|")
         sections.append(generate_year_table(year, benchmarks[year]))
         sections.append("")
 
@@ -265,12 +391,20 @@ def main():
         default=Path("README.md"),
         help="Path to README.md (default: ./README.md)",
     )
+    parser.add_argument(
+        "--session",
+        type=str,
+        help="AOC session token for fetching star counts (defaults to AOC_SESSION env var)",
+    )
 
     args = parser.parse_args()
 
+    # Get session token from args or environment variable
+    session_token = args.session or os.environ.get("AOC_SESSION")
+
     try:
         benchmarks = load_benchmarks(args.directory)
-        update_readme(benchmarks, args.readme)
+        update_readme(benchmarks, args.readme, session_token)
     except Exception as e:
         print(f"Error: {e}")
         return 1
