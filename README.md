@@ -14,14 +14,6 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 ## Benchmarks
 
-### Overall
-
-| Year | Min (seconds) | Language |
-|------|---------------|----------|
-| [2025](https://adventofcode.com/2025) | 0.004 | [**go**](solutions/go/2025), [py](solutions/py/2025) |
-| [2024](https://adventofcode.com/2024) | 0.009 | [**go**](solutions/go/2024), [ts](solutions/ts/2024) |
-| [2023](https://adventofcode.com/2023) | 0.006 | [**go**](solutions/go/2023) |
-
 ### 2025
 
 | Day | Min (seconds) | Language |

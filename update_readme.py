@@ -366,14 +366,14 @@ def update_readme(
     # Build the new benchmark section content
     sections = []
 
-    # Overall table
-    sections.append("")
-    sections.append("### Overall")
-    sections.append("")
-    sections.append("| Year | Min (seconds) | Language |")
-    sections.append("|------|---------------|----------|")
-    sections.append(generate_overall_table(benchmarks, year_totals))
-    sections.append("")
+    # # Overall table
+    # sections.append("")
+    # sections.append("### Overall")
+    # sections.append("")
+    # sections.append("| Year | Min (seconds) | Language |")
+    # sections.append("|------|---------------|----------|")
+    # sections.append(generate_overall_table(benchmarks, year_totals))
+    # sections.append("")
 
     # Individual year tables
     for year in sorted(benchmarks.keys(), reverse=True):
