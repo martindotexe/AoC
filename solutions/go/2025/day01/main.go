@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+const MAX = 100
+
 func partOne(path string) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -28,9 +30,9 @@ func partOne(path string) {
 			break
 		}
 		if dir == 'L' {
-			turn = 100 - turn
+			turn = MAX - turn
 		}
-		dial = (dial + turn) % 100
+		dial = (dial + turn) % MAX
 		if dial == 0 {
 			count++
 		}
@@ -50,7 +52,7 @@ func partTwo(path string) {
 
 	var dial, count = 50, 0
 	for {
-		var turn, step = 0, 1
+		var turn = 0
 		var dir byte
 		if _, err := fmt.Fscanf(reader, "%c%d\n", &dir, &turn); err != nil {
 			if !errors.Is(err, io.EOF) {
@@ -58,16 +60,29 @@ func partTwo(path string) {
 			}
 			break
 		}
+
+		// Calculate how many steps until we first hit 0, and update dial position
+		var firstHit = 0
 		if dir == 'L' {
-			step = 99
-		}
-		for range turn {
-			dial = (dial + step) % 100
-			if dial == 0 {
-				count++
-			}
+			// Going left (counter-clockwise): we hit 0 after 'dial' steps
+			firstHit = dial
+			dial = (dial - turn%MAX + MAX) % MAX
+		} else {
+			// Going right (clockwise): we hit 0 after (MAX - dial) steps
+			firstHit = MAX - dial
+			dial = (dial + turn) % MAX
 		}
 
+		// Handle edge case: if already at 0, first hit is after a full rotation
+		if firstHit == 0 {
+			firstHit = MAX
+		}
+
+		// If we reach the first hit within 'turn' steps, calculate total hits
+		// After the first hit, we hit 0 again every MAX steps
+		if firstHit <= turn {
+			count += 1 + (turn-firstHit)/MAX
+		}
 	}
 	fmt.Println(count)
 }
@@ -78,6 +93,6 @@ func main() {
 		os.Exit(1)
 	}
 	var path = os.Args[1]
-	// partOne(path)
+	partOne(path)
 	partTwo(path)
 }
