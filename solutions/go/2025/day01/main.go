@@ -30,9 +30,10 @@ func partOne(path string) {
 			break
 		}
 		if dir == 'L' {
-			turn = MAX - turn
+			dial = (dial - turn%MAX + MAX) % MAX
+		} else {
+			dial = (dial + turn) % MAX
 		}
-		dial = (dial + turn) % MAX
 		if dial == 0 {
 			count++
 		}
