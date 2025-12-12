@@ -6,7 +6,7 @@ This repository contains solutions to [Advent of Code](https://adventofcode.com/
 
 Overall Advent of Code progress (solutions may be in this repository or elsewhere):
 
-- 2025: 14/24 ⭐
+- 2025: 15/24 ⭐
 - 2024: 11/50 ⭐
 - 2023: 7/50 ⭐
 - 2022: 1/50 ⭐
@@ -18,7 +18,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 | Year | Min (seconds) | Language |
 |------|---------------|----------|
-| [2025](https://adventofcode.com/2025) | 0.568 | [**py**](solutions/py/2025) |
+| [2025](https://adventofcode.com/2025) | 0.004 | [**go**](solutions/go/2025), [py](solutions/py/2025) |
 | [2024](https://adventofcode.com/2024) | 0.009 | [**go**](solutions/go/2024), [ts](solutions/ts/2024) |
 | [2023](https://adventofcode.com/2023) | 0.006 | [**go**](solutions/go/2023) |
 
@@ -26,7 +26,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 
 | Day | Min (seconds) | Language |
 |-----|---------------|----------|
-| [01](https://adventofcode.com/2025/day/1) | 0.035 | [**py**](solutions/py/2025/day01/main.py) |
+| [01](https://adventofcode.com/2025/day/1) | 0.004 | [**go**](solutions/go/2025/day01/main.go), [py](solutions/py/2025/day01/main.py) |
 | [02](https://adventofcode.com/2025/day/2) | 0.214 | [**py**](solutions/py/2025/day02/main.py) |
 | [03](https://adventofcode.com/2025/day/3) | 0.038 | [**py**](solutions/py/2025/day03/main.py) |
 | [04](https://adventofcode.com/2025/day/4) | 0.046 | [**py**](solutions/py/2025/day04/main.py) |
