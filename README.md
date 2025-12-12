@@ -13,7 +13,6 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 - 2021: 5/50 ⭐
 
 ## Benchmarks
-
 ### 2025
 
 | Day | Min (seconds) | Language |
