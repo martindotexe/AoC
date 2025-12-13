@@ -24,7 +24,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 | [05](https://adventofcode.com/2025/day/5) | 0.034 | [**py**](solutions/py/2025/day05/main.py) |
 | [06](https://adventofcode.com/2025/day/6) | 0.054 | [**py**](solutions/py/2025/day06/main.py) |
 | [07](https://adventofcode.com/2025/day/7) | 0.060 | [**py**](solutions/py/2025/day07/main.py) |
-| [08](https://adventofcode.com/2025/day/8) | 1.083 | [**py**](solutions/py/2025/day08/main.py) |
+| [08](https://adventofcode.com/2025/day/8) | 0.483 | [**py**](solutions/py/2025/day08/main.py) |
 | [09](https://adventofcode.com/2025/day/9) | 0.037 | [**py**](solutions/py/2025/day09/main.py) |
 | [10](https://adventofcode.com/2025/day/10) | 0.051 | [**py**](solutions/py/2025/day10/main.py) |
 
