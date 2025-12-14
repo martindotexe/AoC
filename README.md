@@ -6,7 +6,7 @@ This repository contains solutions to [Advent of Code](https://adventofcode.com/
 
 Overall Advent of Code progress (solutions may be in this repository or elsewhere):
 
-- 2025: 17/24 ⭐
+- 2025: 18/24 ⭐
 - 2024: 11/50 ⭐
 - 2023: 7/50 ⭐
 - 2022: 1/50 ⭐
@@ -27,6 +27,7 @@ Overall Advent of Code progress (solutions may be in this repository or elsewher
 | [08](https://adventofcode.com/2025/day/8) | 0.483 | [**py**](solutions/py/2025/day08/main.py) |
 | [09](https://adventofcode.com/2025/day/9) | 0.037 | [**py**](solutions/py/2025/day09/main.py) |
 | [10](https://adventofcode.com/2025/day/10) | 0.051 | [**py**](solutions/py/2025/day10/main.py) |
+| [12](https://adventofcode.com/2025/day/12) | 0.049 | [**py**](solutions/py/2025/day12/main.py) |
 
 ### 2024
 
